@@ -1,0 +1,2 @@
+# Backlogged
+This repo contains all the relevant work for the Backlogged project, part of the "Software Engineering 1" course of the school of Electrical and Computer Engineering, Aristotle University of Thessaloniki
