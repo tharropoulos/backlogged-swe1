@@ -6,7 +6,7 @@ Feature: Edit review or rating for a game
   Scenario: Edit review text and rating
     Given I am on a game's page
     And I have already written a review for a game
-    When I click on the "More" button
+    When I click on the "More" button on my review
     And I click on the "Edit" button
     And I change my review's rating and text
     And I click on the "Save" button
@@ -16,7 +16,7 @@ Feature: Edit review or rating for a game
   Scenario: Edit rating
     Given I am on a game's page
     And I have already written a review for a game
-    When I click on the "More" button
+    When I click on the "More" button on my review
     And I click on the "Edit" button
     And I change my review's rating
     And I click on the "Save" button
@@ -36,7 +36,7 @@ Feature: Edit review or rating for a game
   Scenario: Discard changes
     Given I am on a game's page
     And I have already written a review for a game
-    When I click on the "More" button
+    When I click on the "More" button on my review
     And I click on the "Edit" button
     And I change my review's rating and text
     And I click on the "Discard" button
