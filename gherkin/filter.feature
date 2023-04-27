@@ -1,28 +1,37 @@
 Feature: Filter games based on some properties
+Feature: Filter search results
     As a user
-    I want to filter games based on some properties
-    So that I can find easier the games that I'm interested in
+    I want to filter my search results
+    So that I can find specific games based on their developer, franchise, platforms, or publisher
 
-    Scenario: Filter games by developer studio
-    Given I am on the homepage of the app
-    And I have selected "Filter by developer studio"
-    When I select one or more specific developer studios from the list of available studios
-    Then I should only see games developed by this studio
-
-    Scenario: Filter games by genre
-    Given I am on the homepage of the app
-    And I have selected "Filter by genre"
-    When I select one or more specific genres from the list of available genres
-    Then I should only see games categorized as this genre
-
-    Scenario: Filter games by franchise
-    Given I am on the homepage of the app
-    And I have selected "Filter by franchise"
-    When I select one or more franchises from the list of available franchises
-    Then I should only see games in the specific's franchise
-
-    Scenario: Filter games by platform
-    Given I am on the homepage of the app
-    And I have selected "Filter by platform"
-    When I select one or more platforms from the list of available platforms
-    Then I should only see games that can be played on this specific platform
+    Scenario: Filter search results by developer
+        Given I am on the search results page
+        When I select "Nintendo" as the developer filter
+        And I click the apply filter button
+        Then I should see a list of search results that includes games developed by Nintendo
+    
+    Scenario: Filter search results by franchise
+        Given I am on the search results page
+        When I select "Super Mario" as the franchise filter
+        And I click the apply filter button
+        Then I should see a list of search results that includes games from the Super Mario franchise
+    
+    Scenario: Filter search results by platform
+        Given I am on the search results page
+        When I select "Nintendo Switch" as the platform filter
+        And I click the apply filter button
+        Then I should see a list of search results that includes games available on the Nintendo Switch
+    
+    Scenario: Filter search results by publisher
+        Given I am on the search results page
+        When I select "Electronic Arts" as the publisher filter
+        And I click the apply filter button
+        Then I should see a list of search results that includes games published by Electronic Arts
+    
+    Scenario: Multiple filters applied
+        Given I am on the search results page
+        When I select "Ubisoft" as the developer filter
+        And I select "Assassin's Creed" as the franchise filter
+        And I select "PlayStation 5" as the platform filter
+        And I click the apply filter button
+        Then I should see a list of search results that includes Assassin's Creed games developed by Ubisoft and available on PlayStation 5
