@@ -1,16 +1,22 @@
-Feature: Search a game by its title
-  As a user
-  I want to search a game by its title
-  So that I can find the game
+Feature: Search a game by title
+    As a user
+    I want to search for games by title
+    So that I can find specific games
 
-  Scenario: Search a game which doesn't exist in the database or it is written wrongly
-    Given I am on the home page
-    When I enter invalid (it doesn't exist or it is written wrongly) title in the search bar
-    And I click the search button
-    Then I should see an error message that says "The game with the title you provided does not exist"
-
-  Scenario: Search a game which exists and it is written correctly
-    Given I am on the home page
-    When I enter valid (it exists and it is written correctly) title in the search bar
-    And I click the search button
-    Then I should be redirected to the game's page
+    Scenario: Search for a game by exact title match
+        Given I am on the home page
+        When I type "The Legend of Zelda: Breath of the Wild" into the search bar
+        And I click the search button
+        Then I should see a list of search results that includes "The Legend of Zelda: Breath of the Wild"
+    
+    Scenario: Search for games by partial title match
+        Given I am on the home page
+        When I type "Mario" into the search bar
+        And I click the search button
+        Then I should see a list of search results that includes games with "Mario" in their title
+    
+    Scenario: No search results found
+        Given I am on the home page
+        When I type "abcdefg" into the search bar
+        And I click the search button
+        Then I should see a message that says "No search results found"
