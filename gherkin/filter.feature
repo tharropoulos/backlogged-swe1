@@ -1,4 +1,3 @@
-Feature: Filter games based on some properties
 Feature: Filter search results
     As a user
     I want to filter my search results
