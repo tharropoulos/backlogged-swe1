@@ -37,3 +37,10 @@ Feature: Edit profile functionality
         And I provide the correct current password
         And I click the save button
         Then I should see an error message that says "The email has already been taken"
+
+    Scenario: Current password is wrong
+        Given I am on the edit profile page
+        When I enter valid updated profile information with changes to password or email
+        And I provide the wrong current password
+        And I click the save button
+        Then I should see an error message that says "The current password is incorrect"
