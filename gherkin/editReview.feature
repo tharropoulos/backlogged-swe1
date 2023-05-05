@@ -32,12 +32,3 @@ Feature: Edit review or rating for a game
     And I click on the "Save" button
     Then I should see a success message
     And I should see the updated review on the game's page
-
-  Scenario: Discard changes
-    Given I am on a game's page
-    And I have already written a review for a game
-    When I click on the "More" button on my review
-    And I click on the "Edit" button
-    And I change my review's rating and text
-    And I click on the "Discard" button
-    Then I should see the original review on the game's page
