@@ -26,7 +26,8 @@ Feature: Edit profile functionality
          
     Scenario: Passwords do not match
         Given I am on the edit profile page
-        When I enter a password
+        When I enter a new password
         And I enter a different password in the confirm password field
+        And I provide the correct current password
         And I click the save button
         Then I should see an error message that says "The passwords do not match"
