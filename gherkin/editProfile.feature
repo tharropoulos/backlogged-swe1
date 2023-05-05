@@ -21,6 +21,7 @@ Feature: Edit profile functionality
     Scenario: Edit profile with invalid image size
         Given I am on the edit profile page
         When I upload a profile image that is larger than 2MB
+        And I click the save button
         Then I should see an error message that says "The image is too large"
          
     Scenario: Passwords do not match
