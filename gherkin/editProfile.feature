@@ -31,6 +31,7 @@ Feature: Edit profile functionality
         And I provide the correct current password
         And I click the save button
         Then I should see an error message that says "The passwords do not match"
+
     Scenario: Email is already taken
         Given I am on the edit profile page
         When I enter an email that is already taken
