@@ -9,7 +9,7 @@ Feature: Review games and rate them
     And I submit the review
     Then I should see a success message
     And my review should be visible on the game's page
-    And the game should not have a rating yet
+    And the review should not have a rating yet
 
   Scenario: Review a game with rating
     Given I am on a game's page
