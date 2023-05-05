@@ -19,3 +19,4 @@ Feature: Review games and rate them
     Then I should see a success message
     And my review should be visible on the game's page
     And the review's rating should be updated to 4 stars
+    And the game's average rating should be updated based on my rating
