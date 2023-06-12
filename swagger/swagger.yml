@@ -1,0 +1,3563 @@
+openapi: 3.0.1
+info:
+  title: Backlogged API
+  description: >-
+    An ASP.NET Core Web API for Backlogged. You can find the repository at
+    [https://github.com/tharropoulos/backlogged-api](here)
+  contact:
+    name: Fanis Tharropoulos
+    email: ftharropoulos@gmail.com
+  license:
+    name: Apache License
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: v1
+paths:
+  /api/v1/backlog:
+    get:
+      tags:
+        - Backlog
+      summary: Gets all Backlogs.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the backlogs correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BacklogDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BacklogDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BacklogDto"
+  /api/v1/backlog/{id}:
+    get:
+      tags:
+        - Backlog
+      summary: Gets a Backlog based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the backlog
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/BacklogDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BacklogDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/BacklogDto"
+        "404":
+          description: Backlog not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/backlog/{id}/visibility:
+    patch:
+      tags:
+        - Backlog
+      summary: Updates a Backlog visibility based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBacklogDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBacklogDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateBacklogDto"
+      responses:
+        "204":
+          description: backlog updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: backlog not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/backlog/{id}/game:
+    get:
+      tags:
+        - Backlog
+      summary: Gets the games for a Backlog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "404":
+          description: Backlog not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    patch:
+      tags:
+        - Backlog
+      summary: >-
+        Updates a Backlog's games list. Use "add" or "remove" operation to
+        update the list.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBacklogGamesDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBacklogGamesDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateBacklogGamesDto"
+      responses:
+        "204":
+          description: backlog updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/developer:
+    get:
+      tags:
+        - Developer
+      summary: Gets all Developers.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Developers correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeveloperDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeveloperDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeveloperDto"
+    post:
+      tags:
+        - Developer
+      summary: Adds a new Developer to Backlogged.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDeveloperDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreateDeveloperDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreateDeveloperDto"
+      responses:
+        "201":
+          description: Returns the Developer
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/DeveloperDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeveloperDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/DeveloperDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/developer/{id}:
+    get:
+      tags:
+        - Developer
+      summary: Gets a Developer based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Developer
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/DeveloperDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeveloperDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/DeveloperDto"
+        "404":
+          description: Developer not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Developer
+      summary: Updates a Developer based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDeveloperDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDeveloperDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateDeveloperDto"
+      responses:
+        "204":
+          description: Developer updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: Developer not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Developer
+      summary: Deletes a Developer from Backlogged.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Developer deleted, no response
+        "404":
+          description: Developer not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/developer/{id}/game:
+    get:
+      tags:
+        - Developer
+      summary: Gets the games for a Developer.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "404":
+          description: developer not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/franchise:
+    get:
+      tags:
+        - Franchise
+      summary: Gets all Franchises.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Franchises correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FranchiseDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FranchiseDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FranchiseDto"
+    post:
+      tags:
+        - Franchise
+      summary: Adds a new Franchise to Backlogged.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFranchiseDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreateFranchiseDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreateFranchiseDto"
+      responses:
+        "200":
+          description: Franchise created
+        "201":
+          description: Created
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/franchise/{id}:
+    get:
+      tags:
+        - Franchise
+      summary: Gets a Franchise based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Franchise
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+        "404":
+          description: Franchise not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Franchise
+      summary: Updates a Franchise's details.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFranchiseDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFranchiseDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateFranchiseDto"
+      responses:
+        "204":
+          description: Franchise updated, no content
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: Franchise not Franchise
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Franchise
+      summary: Deletes a Franchise from Backlogged.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Success
+        "204":
+          description: Franchise deleted, no content
+        "404":
+          description: Franchise not found
+  /api/v1/franchise/{id}/game:
+    get:
+      tags:
+        - Franchise
+      summary: Gets the games for a Franchise.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "404":
+          description: Franchise not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game:
+    get:
+      tags:
+        - Game
+      summary: Gets all games.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Games correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+    post:
+      tags:
+        - Game
+      summary: Adds a new game to Backlogged.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGameDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreateGameDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreateGameDto"
+      responses:
+        "201":
+          description: Returns the Game
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/GameDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}:
+    get:
+      tags:
+        - Game
+      summary: Gets a Game based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Game
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/GameDto"
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Game
+      summary: Updates a Game based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGameDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGameDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateGameDto"
+      responses:
+        "204":
+          description: game updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Game
+      summary: Deletes a Game from Backlogged.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: game deleted, no response
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/search:
+    post:
+      tags:
+        - Game
+      summary: Gets all games based on the search parameters.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GameSearchParams"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/GameSearchParams"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/GameSearchParams"
+      responses:
+        "200":
+          description: Returns the Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: games not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}/developer:
+    get:
+      tags:
+        - Game
+      summary: Gets the platforms for a Game.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Developers
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeveloperDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeveloperDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeveloperDto"
+        "404":
+          description: Game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Game
+      summary: Updates a Game's developers list.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeveloperIdList"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DeveloperIdList"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/DeveloperIdList"
+      responses:
+        "204":
+          description: game updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}/genre:
+    get:
+      tags:
+        - Game
+      summary: Gets the genres for a Game.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Genres
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreDto"
+        "404":
+          description: Game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Game
+      summary: Updates a Game's genres list.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenreIdList"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/GenreIdList"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/GenreIdList"
+      responses:
+        "204":
+          description: game updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}/platform:
+    get:
+      tags:
+        - Game
+      summary: Gets the platforms for a Game.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Platforms
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlatformDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlatformDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlatformDto"
+        "404":
+          description: Game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Game
+      summary: Updates a Game's platforms list.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlatformIdList"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/PlatformIdList"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/PlatformIdList"
+      responses:
+        "204":
+          description: game updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}/franchise:
+    get:
+      tags:
+        - Game
+      summary: Gets the franchise for a Game.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Developers
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+        "404":
+          description: Game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}/publisher:
+    get:
+      tags:
+        - Game
+      summary: Gets the publisher for a Game.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Publisher
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseDto"
+        "404":
+          description: Game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/game/{id}/review:
+    get:
+      tags:
+        - Game
+      summary: Gets the Reviews for a Game.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Reviews
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+        "404":
+          description: Game not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/genre:
+    get:
+      tags:
+        - Genre
+      summary: Gets all Genres.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Genres correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreDto"
+    post:
+      tags:
+        - Genre
+      summary: Adds a new genre to Backlogged.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGenreDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreateGenreDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreateGenreDto"
+      responses:
+        "201":
+          description: Returns the Genre
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/GenreDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/GenreDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/genre/{id}:
+    get:
+      tags:
+        - Genre
+      summary: Gets a Genre based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Genre
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/GenreDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/GenreDto"
+        "404":
+          description: genre not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Genre
+      summary: Updates a Genre based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenreDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenreDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenreDto"
+      responses:
+        "204":
+          description: genre updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: genre not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Genre
+      summary: Deletes a Genre from Backlogged.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: genre deleted, no response
+        "404":
+          description: genre not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/genre/{id}/game:
+    get:
+      tags:
+        - Genre
+      summary: Gets the games for a backlog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "404":
+          description: Backlog not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/platform:
+    get:
+      tags:
+        - Platform
+      summary: Gets all Platforms.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Platforms correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlatformDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlatformDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlatformDto"
+    post:
+      tags:
+        - Platform
+      summary: Adds a new platform to Backlogged.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlatformDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlatformDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreatePlatformDto"
+      responses:
+        "201":
+          description: Returns the Platform
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/PlatformDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlatformDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/PlatformDto"
+        "400":
+          description: BaPlatform request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/platform/{id}:
+    get:
+      tags:
+        - Platform
+      summary: Gets a Platform based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Platform
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/Platform"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Platform"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/Platform"
+        "404":
+          description: Platform not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Platform
+      summary: Updates a Platform based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlatformDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlatformDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlatformDto"
+      responses:
+        "204":
+          description: platform updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: platform not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Platform
+      summary: Deletes a Platform from Backlogged.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: platform deleted, no response
+        "404":
+          description: platform not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/platform/{id}/game:
+    get:
+      tags:
+        - Platform
+      summary: Gets the games for a Platform.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "404":
+          description: platform not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/publisher:
+    get:
+      tags:
+        - Publisher
+      summary: Gets all Publishers.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Publisherss correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublisherDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublisherDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublisherDto"
+    post:
+      tags:
+        - Publisher
+      summary: Adds a new Publisher to the store.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePublisherDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreatePublisherDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreatePublisherDto"
+      responses:
+        "201":
+          description: Publisher created
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/PublisherDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublisherDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/PublisherDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/publisher/{id}:
+    get:
+      tags:
+        - Publisher
+      summary: Gets a Publisher based on their id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Publishers
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/PublisherDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublisherDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/PublisherDto"
+        "404":
+          description: Publisher not found
+    put:
+      tags:
+        - Publisher
+      summary: Updates a Publisher's details.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePublisherDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePublisherDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdatePublisherDto"
+      responses:
+        "204":
+          description: Publisher updated, no content
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: Publisher not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Publisher
+      summary: Deletes a Publisher from the store.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Publisher deleted, no content
+        "404":
+          description: Publisher not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/publisher/{id}/game:
+    get:
+      tags:
+        - Publisher
+      summary: Gets the games for a backlog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Games
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameDto"
+        "404":
+          description: Backlog not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/review:
+    get:
+      tags:
+        - Review
+      summary: Gets all Reviews.
+      responses:
+        "200":
+          description: Returns the Reviews correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+    post:
+      tags:
+        - Review
+      summary: Adds a new review to Backlogged.
+      parameters:
+        - name: authorId
+          in: query
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: gameId
+          in: query
+          style: form
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewDto"
+      responses:
+        "201":
+          description: Returns the Reviews
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ReviewDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ReviewDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/review/{id}:
+    get:
+      tags:
+        - Review
+      summary: Gets a Review based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Reviews
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ReviewDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ReviewDto"
+        "404":
+          description: review not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    put:
+      tags:
+        - Review
+      summary: Updates a Review based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateReviewDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateReviewDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateReviewDto"
+      responses:
+        "204":
+          description: review updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: review not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Review
+      summary: Deletes a Review from Backlogged.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: review deleted, no response
+        "404":
+          description: review not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user:
+    get:
+      tags:
+        - User
+      summary: Gets all Users.
+      parameters:
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Returns the Users correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+    post:
+      tags:
+        - User
+      summary: Adds a new User to Backlogged along with a new Backlog.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/CreateUserDto"
+      responses:
+        "201":
+          description: Returns the User
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user/{id}:
+    get:
+      tags:
+        - User
+      summary: Gets a User based on its' id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the User
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+        "404":
+          description: User not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    patch:
+      tags:
+        - User
+      summary: Updates a User based on their id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserDto"
+      responses:
+        "204":
+          description: User updated, no response
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: User not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - User
+      summary: Deletes a User from Backlogged and his Backlog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: User deleted, no response
+        "404":
+          description: User not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user/login:
+    post:
+      tags:
+        - User
+      summary: Logs in a User based on their username and password.Attribute
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/LoginUserDto"
+      responses:
+        "201":
+          description: JWT token created
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: User not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user/{id}/email:
+    patch:
+      tags:
+        - User
+      summary: Updates a User's email based on their id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmailDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmailDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmailDto"
+      responses:
+        "200":
+          description: Returns the User's email
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: User not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user/{id}/password:
+    patch:
+      tags:
+        - User
+      summary: Updates a User's password based on their id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePasswordDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePasswordDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/UpdatePasswordDto"
+      responses:
+        "204":
+          description: Updates the User's password
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: User not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user/{id}/review:
+    get:
+      tags:
+        - User
+      summary: Gets the reviews for a User.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: PageNumber
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Reviews
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReviewDto"
+        "404":
+          description: Backlog not found
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/user/{id}/backlog:
+    get:
+      tags:
+        - User
+      summary: Gets a User's backlog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Returns the Users correctly
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+        "404":
+          description: User not found
+components:
+  schemas:
+    Backlog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        user:
+          $ref: "#/components/schemas/User"
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+          nullable: true
+        isVisible:
+          type: boolean
+      additionalProperties: false
+    BacklogDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        isVisible:
+          type: boolean
+      additionalProperties: false
+    CreateDeveloperDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateFranchiseDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateGameDto:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          minLength: 1
+          type: string
+        rating:
+          type: number
+          format: float
+        backgoundImageUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        releaseDate:
+          type: string
+          format: date-time
+        coverImageUrl:
+          type: string
+          nullable: true
+        franchiseId:
+          type: string
+          format: uuid
+          nullable: true
+        publisherId:
+          type: string
+          format: uuid
+          nullable: true
+      additionalProperties: false
+    CreateGenreDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreatePlatformDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreatePublisherDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateReviewDto:
+      type: object
+      properties:
+        details:
+          type: string
+          nullable: true
+        rating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          format: int32
+      additionalProperties: false
+    CreateUserDto:
+      required:
+        - confirmPassword
+        - email
+        - password
+      type: object
+      properties:
+        userName:
+          type: string
+          nullable: true
+        password:
+          minLength: 1
+          type: string
+        confirmPassword:
+          minLength: 1
+          type: string
+        email:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    Developer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+          nullable: true
+      additionalProperties: false
+    DeveloperDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        id:
+          type: string
+          format: uuid
+      additionalProperties: false
+    DeveloperIdList:
+      type: object
+      properties:
+        developerIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+    Franchise:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+          nullable: true
+      additionalProperties: false
+    FranchiseDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        id:
+          type: string
+          format: uuid
+      additionalProperties: false
+    Game:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        rating:
+          type: number
+          format: float
+        coverImageUrl:
+          type: string
+          nullable: true
+        releaseDate:
+          type: string
+          format: date-time
+        backgroundImageUrl:
+          type: string
+          nullable: true
+        franchiseId:
+          type: string
+          format: uuid
+          nullable: true
+        franchise:
+          $ref: "#/components/schemas/Franchise"
+        publisherId:
+          type: string
+          format: uuid
+          nullable: true
+        publisher:
+          $ref: "#/components/schemas/Publisher"
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+          nullable: true
+        developers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Developer"
+          nullable: true
+        platforms:
+          type: array
+          items:
+            $ref: "#/components/schemas/Platform"
+          nullable: true
+        reviews:
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+          nullable: true
+        backlogs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Backlog"
+          nullable: true
+      additionalProperties: false
+    GameDto:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          minLength: 1
+          type: string
+        rating:
+          type: number
+          format: float
+        backgoundImageUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        releaseDate:
+          type: string
+          format: date-time
+        coverImageUrl:
+          type: string
+          nullable: true
+        franchiseId:
+          type: string
+          format: uuid
+          nullable: true
+        publisherId:
+          type: string
+          format: uuid
+          nullable: true
+        id:
+          type: string
+          format: uuid
+      additionalProperties: false
+    GameSearchParams:
+      type: object
+      properties:
+        title:
+          type: string
+          nullable: true
+        genreIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        platformIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        developerIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        publisherIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        franchiseIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        sortOrder:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Genre:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+          nullable: true
+      additionalProperties: false
+    GenreDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        id:
+          type: string
+          format: uuid
+      additionalProperties: false
+    GenreIdList:
+      type: object
+      properties:
+        genreIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+    LoginUserDto:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          minLength: 1
+          type: string
+        password:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    Platform:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+          nullable: true
+      additionalProperties: false
+    PlatformDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        id:
+          type: string
+          format: uuid
+      additionalProperties: false
+    PlatformIdList:
+      type: object
+      properties:
+        platformIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+          nullable: true
+      additionalProperties: false
+    PublisherDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        id:
+          type: string
+          format: uuid
+      additionalProperties: false
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        rating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          format: int32
+        details:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        gameId:
+          type: string
+          format: uuid
+        game:
+          $ref: "#/components/schemas/Game"
+        authorId:
+          type: string
+          format: uuid
+        author:
+          $ref: "#/components/schemas/User"
+      additionalProperties: false
+    ReviewDto:
+      type: object
+      properties:
+        details:
+          type: string
+          nullable: true
+        rating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          format: int32
+        id:
+          type: string
+          format: uuid
+        authorId:
+          type: string
+          format: uuid
+        gameId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    UpdateBacklogDto:
+      type: object
+      properties:
+        isVisible:
+          type: boolean
+      additionalProperties: false
+    UpdateBacklogGamesDto:
+      type: object
+      properties:
+        operation:
+          type: string
+          nullable: true
+        gameIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+    UpdateDeveloperDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdateEmailDto:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+          nullable: true
+        newEmail:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdateFranchiseDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdateGameDto:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          minLength: 1
+          type: string
+        rating:
+          type: number
+          format: float
+        backgoundImageUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        releaseDate:
+          type: string
+          format: date-time
+        coverImageUrl:
+          type: string
+          nullable: true
+        franchiseId:
+          type: string
+          format: uuid
+          nullable: true
+        publisherId:
+          type: string
+          format: uuid
+          nullable: true
+      additionalProperties: false
+    UpdateGenreDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdatePasswordDto:
+      required:
+        - confirmNewPassword
+        - currentPassword
+        - newPassword
+      type: object
+      properties:
+        currentPassword:
+          minLength: 1
+          type: string
+        newPassword:
+          minLength: 1
+          type: string
+        confirmNewPassword:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    UpdatePlatformDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdatePublisherDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdateReviewDto:
+      type: object
+      properties:
+        details:
+          type: string
+          nullable: true
+        rating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          format: int32
+      additionalProperties: false
+    UpdateUserDto:
+      type: object
+      properties:
+        userName:
+          type: string
+          nullable: true
+        profileImageUrl:
+          type: string
+          nullable: true
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userName:
+          type: string
+          nullable: true
+        normalizedUserName:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        normalizedEmail:
+          type: string
+          nullable: true
+        emailConfirmed:
+          type: boolean
+        passwordHash:
+          type: string
+          nullable: true
+        securityStamp:
+          type: string
+          nullable: true
+        concurrencyStamp:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        phoneNumberConfirmed:
+          type: boolean
+        twoFactorEnabled:
+          type: boolean
+        lockoutEnd:
+          type: string
+          format: date-time
+          nullable: true
+        lockoutEnabled:
+          type: boolean
+        accessFailedCount:
+          type: integer
+          format: int32
+        profileImageUrl:
+          type: string
+          nullable: true
+        reviews:
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+          nullable: true
+        backlogId:
+          type: string
+          format: uuid
+          nullable: true
+        backlog:
+          $ref: "#/components/schemas/Backlog"
+      additionalProperties: false
+    UserDto:
+      type: object
+      properties:
+        userName:
+          type: string
+          nullable: true
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          nullable: true
+        passwordHash:
+          type: string
+          nullable: true
+        profileImageUrl:
+          type: string
+          nullable: true
+        normalizedUserName:
+          type: string
+          nullable: true
+        normalizedEmail:
+          type: string
+          nullable: true
+        securityStamp:
+          type: string
+          nullable: true
+        concurrencyStamp:
+          type: string
+          nullable: true
+        twoFactorEnabled:
+          type: boolean
+          nullable: true
+        emailConfirmed:
+          type: boolean
+          nullable: true
+        accessFailedCount:
+          type: integer
+          format: int32
+        backlogId:
+          type: string
+          format: uuid
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: JWT Authorization header using the Bearer scheme.
+      name: Authorization
+      in: header
+security:
+  - Bearer: []
