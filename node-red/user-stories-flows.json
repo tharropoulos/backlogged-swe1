@@ -1,0 +1,1062 @@
+[
+    {
+        "id": "53ea3989db9284de",
+        "type": "tab",
+        "label": "Update User Password",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2ac1c202b6b66c91",
+        "type": "tab",
+        "label": "Delete Review",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1357f547ef2e403b",
+        "type": "tab",
+        "label": "Sign Up",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "788b5ee2f0bda270",
+        "type": "tab",
+        "label": "Log In",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "51729547f913d78f",
+        "type": "tab",
+        "label": "Update User Details",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d136ece91f637414",
+        "type": "tab",
+        "label": "Manage Backlog ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9795dad1eb7cccf8",
+        "type": "tab",
+        "label": "Create Review",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "11d66f51af629232",
+        "type": "tab",
+        "label": "Update Review",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7322c1d4a891e245",
+        "type": "tab",
+        "label": "Search For Games",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9c66d76cef8b407b",
+        "type": "tab",
+        "label": "Update User Email",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4c431b3aee1afc6b",
+        "type": "http request",
+        "z": "53ea3989db9284de",
+        "name": "PATCH: /user/{id}/password",
+        "method": "PUT",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Users/Login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 700,
+        "y": 520,
+        "wires": [
+            [
+                "8b3fe28a149e1f92"
+            ]
+        ]
+    },
+    {
+        "id": "2289753d28e216ef",
+        "type": "inject",
+        "z": "53ea3989db9284de",
+        "name": "editUserPassword",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 470,
+        "y": 520,
+        "wires": [
+            [
+                "4c431b3aee1afc6b"
+            ]
+        ]
+    },
+    {
+        "id": "8b3fe28a149e1f92",
+        "type": "function",
+        "z": "53ea3989db9284de",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 520,
+        "wires": [
+            [
+                "6c772e90a114ded3"
+            ]
+        ]
+    },
+    {
+        "id": "6c772e90a114ded3",
+        "type": "debug",
+        "z": "53ea3989db9284de",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "4989254837e6214a",
+        "type": "comment",
+        "z": "53ea3989db9284de",
+        "name": "FR 3: A user must be able to update their details (Update Password)",
+        "info": "",
+        "x": 880,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a335074ea36ec588",
+        "type": "inject",
+        "z": "2ac1c202b6b66c91",
+        "name": "deleteReview",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 260,
+        "wires": [
+            [
+                "b1d77ab59653c8c1"
+            ]
+        ]
+    },
+    {
+        "id": "b1d77ab59653c8c1",
+        "type": "http request",
+        "z": "2ac1c202b6b66c91",
+        "name": "DELETE:/review/{id}",
+        "method": "DELETE",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "DELETE:/review/{id}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 560,
+        "y": 260,
+        "wires": [
+            [
+                "2f3f44ab897da07e"
+            ]
+        ]
+    },
+    {
+        "id": "2f3f44ab897da07e",
+        "type": "function",
+        "z": "2ac1c202b6b66c91",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 260,
+        "wires": [
+            [
+                "cc3f3b6fe9ae2bda"
+            ]
+        ]
+    },
+    {
+        "id": "cc3f3b6fe9ae2bda",
+        "type": "debug",
+        "z": "2ac1c202b6b66c91",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "96eb579c5596d635",
+        "type": "inject",
+        "z": "1357f547ef2e403b",
+        "name": "signUp",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "15a1ebfd27c59708"
+            ]
+        ]
+    },
+    {
+        "id": "15a1ebfd27c59708",
+        "type": "http request",
+        "z": "1357f547ef2e403b",
+        "name": "POST: /user",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Users",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 730,
+        "y": 440,
+        "wires": [
+            [
+                "6b6d5e24643fa0b9"
+            ]
+        ]
+    },
+    {
+        "id": "6b6d5e24643fa0b9",
+        "type": "function",
+        "z": "1357f547ef2e403b",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 440,
+        "wires": [
+            [
+                "7a8c7e79d90072ed"
+            ]
+        ]
+    },
+    {
+        "id": "7a8c7e79d90072ed",
+        "type": "debug",
+        "z": "1357f547ef2e403b",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "654872bf86b51ac5",
+        "type": "comment",
+        "z": "1357f547ef2e403b",
+        "name": "FR 1: A user must be able to register to the application",
+        "info": "",
+        "x": 900,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0e95d753bc808ea3",
+        "type": "inject",
+        "z": "788b5ee2f0bda270",
+        "name": "logIn",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 690,
+        "y": 380,
+        "wires": [
+            [
+                "28f7d10fef52a71e"
+            ]
+        ]
+    },
+    {
+        "id": "28f7d10fef52a71e",
+        "type": "http request",
+        "z": "788b5ee2f0bda270",
+        "name": "POST: /user/login",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Users/Login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 870,
+        "y": 380,
+        "wires": [
+            [
+                "33e018abbcb7ec69"
+            ]
+        ]
+    },
+    {
+        "id": "33e018abbcb7ec69",
+        "type": "function",
+        "z": "788b5ee2f0bda270",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 380,
+        "wires": [
+            [
+                "2ec5374ea2ddac20"
+            ]
+        ]
+    },
+    {
+        "id": "2ec5374ea2ddac20",
+        "type": "debug",
+        "z": "788b5ee2f0bda270",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "773de24ff30b0af7",
+        "type": "comment",
+        "z": "788b5ee2f0bda270",
+        "name": "FR 2: A user must be able to log into the application",
+        "info": "",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e1c62854b6423bec",
+        "type": "inject",
+        "z": "51729547f913d78f",
+        "name": "editUserDetails",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "1512f83532ae8adc"
+            ]
+        ]
+    },
+    {
+        "id": "1512f83532ae8adc",
+        "type": "http request",
+        "z": "51729547f913d78f",
+        "name": "PATCH: /user/{id}/details",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Users/Login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 830,
+        "y": 400,
+        "wires": [
+            [
+                "0717db3b08bbfcf9"
+            ]
+        ]
+    },
+    {
+        "id": "0717db3b08bbfcf9",
+        "type": "function",
+        "z": "51729547f913d78f",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "22b787ac32930433"
+            ]
+        ]
+    },
+    {
+        "id": "22b787ac32930433",
+        "type": "debug",
+        "z": "51729547f913d78f",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "efd03b2d3f9e9825",
+        "type": "comment",
+        "z": "51729547f913d78f",
+        "name": "FR 3: A user must be able to update their details",
+        "info": "",
+        "x": 940,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "028b429f6e883034",
+        "type": "inject",
+        "z": "d136ece91f637414",
+        "name": "manageBacklog",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 420,
+        "wires": [
+            [
+                "4702e497aa232e28"
+            ]
+        ]
+    },
+    {
+        "id": "4702e497aa232e28",
+        "type": "http request",
+        "z": "d136ece91f637414",
+        "name": "PATCH: /backlog/{id}/game",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Backlogs/{id}/Games",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 920,
+        "y": 420,
+        "wires": [
+            [
+                "e0301b20c75667ec"
+            ]
+        ]
+    },
+    {
+        "id": "e0301b20c75667ec",
+        "type": "function",
+        "z": "d136ece91f637414",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 420,
+        "wires": [
+            [
+                "6e20471c0b9b8e7e"
+            ]
+        ]
+    },
+    {
+        "id": "6e20471c0b9b8e7e",
+        "type": "debug",
+        "z": "d136ece91f637414",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a7fbb6c415df21b4",
+        "type": "comment",
+        "z": "d136ece91f637414",
+        "name": "FR4/FR5: A user must be able to manage their backlog",
+        "info": "",
+        "x": 1040,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "cc9606bc8c4d97e7",
+        "type": "inject",
+        "z": "9795dad1eb7cccf8",
+        "name": "createReview",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 630,
+        "y": 440,
+        "wires": [
+            [
+                "ce9c6273044c6e7d"
+            ]
+        ]
+    },
+    {
+        "id": "ce9c6273044c6e7d",
+        "type": "http request",
+        "z": "9795dad1eb7cccf8",
+        "name": "POST: /review",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Backlogs/{id}/Games",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 840,
+        "y": 440,
+        "wires": [
+            [
+                "170a7f20ad685ec0"
+            ]
+        ]
+    },
+    {
+        "id": "170a7f20ad685ec0",
+        "type": "function",
+        "z": "9795dad1eb7cccf8",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 440,
+        "wires": [
+            [
+                "47ba3f3ae4a0f93e"
+            ]
+        ]
+    },
+    {
+        "id": "47ba3f3ae4a0f93e",
+        "type": "debug",
+        "z": "9795dad1eb7cccf8",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "a3378f47212a1595",
+        "type": "comment",
+        "z": "9795dad1eb7cccf8",
+        "name": "FR6/FR7: A user must be able to conduct a review for a game and add a rating",
+        "info": "",
+        "x": 1050,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0f0a6f9081ec129b",
+        "type": "inject",
+        "z": "11d66f51af629232",
+        "name": "updateReview",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 730,
+        "y": 480,
+        "wires": [
+            [
+                "f2076f0bfef46b4e"
+            ]
+        ]
+    },
+    {
+        "id": "f2076f0bfef46b4e",
+        "type": "http request",
+        "z": "11d66f51af629232",
+        "name": "PUT: /review/{id}",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Backlogs/{id}/Games",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 940,
+        "y": 480,
+        "wires": [
+            [
+                "7cd901b920fd19d1"
+            ]
+        ]
+    },
+    {
+        "id": "7cd901b920fd19d1",
+        "type": "function",
+        "z": "11d66f51af629232",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 480,
+        "wires": [
+            [
+                "2f5a1981378e8466"
+            ]
+        ]
+    },
+    {
+        "id": "2f5a1981378e8466",
+        "type": "debug",
+        "z": "11d66f51af629232",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1450,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "47270a97cf22df12",
+        "type": "comment",
+        "z": "11d66f51af629232",
+        "name": "FR 8: A user must be able to update their review for a game",
+        "info": "",
+        "x": 1100,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5304a1b1a9e20a8d",
+        "type": "inject",
+        "z": "7322c1d4a891e245",
+        "name": "searchGames",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 730,
+        "y": 480,
+        "wires": [
+            [
+                "ed34cc4938daa9b9"
+            ]
+        ]
+    },
+    {
+        "id": "ed34cc4938daa9b9",
+        "type": "http request",
+        "z": "7322c1d4a891e245",
+        "name": "PUT: /game/search",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Games/Search",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 950,
+        "y": 480,
+        "wires": [
+            [
+                "c128d314df484d8a"
+            ]
+        ]
+    },
+    {
+        "id": "c128d314df484d8a",
+        "type": "function",
+        "z": "7322c1d4a891e245",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 480,
+        "wires": [
+            [
+                "670d62a85ba50a82"
+            ]
+        ]
+    },
+    {
+        "id": "670d62a85ba50a82",
+        "type": "debug",
+        "z": "7322c1d4a891e245",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1450,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "7803f847a8eb4fe5",
+        "type": "comment",
+        "z": "7322c1d4a891e245",
+        "name": "FR9/FR10/FR11/FR12/FR13/FR14: A user must be able to search for a game and filter though results",
+        "info": "",
+        "x": 1080,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "7bc20af901662e5d",
+        "type": "http request",
+        "z": "9c66d76cef8b407b",
+        "name": "PUT: /user/{id}/email",
+        "method": "PUT",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://backlogged-api-production.up.railway.app/api/v1/Users/Login",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 640,
+        "y": 700,
+        "wires": [
+            [
+                "1d470054fe331674"
+            ]
+        ]
+    },
+    {
+        "id": "1a5b5f056c6eb2d0",
+        "type": "inject",
+        "z": "9c66d76cef8b407b",
+        "name": "editUserEmail",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 410,
+        "y": 700,
+        "wires": [
+            [
+                "7bc20af901662e5d"
+            ]
+        ]
+    },
+    {
+        "id": "1d470054fe331674",
+        "type": "function",
+        "z": "9c66d76cef8b407b",
+        "name": "WriteResponseToConsole",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 700,
+        "wires": [
+            [
+                "16ce6b5ca1a4c98e"
+            ]
+        ]
+    },
+    {
+        "id": "16ce6b5ca1a4c98e",
+        "type": "debug",
+        "z": "9c66d76cef8b407b",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "60d1cc7d93aab5d0",
+        "type": "comment",
+        "z": "9c66d76cef8b407b",
+        "name": "FR 3: A user must be able to update their details (Update Email)",
+        "info": "",
+        "x": 830,
+        "y": 600,
+        "wires": []
+    }
+]
